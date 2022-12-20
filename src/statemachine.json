@@ -1,0 +1,11 @@
+{
+  "Comment": "Basic workflow to filter notifiable users, and run a dummy notification",
+  "StartAt": "FindUsersToNotify",
+  "States": {
+    "FindUsersToNotify": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:FindUsersToNotify",
+      "End": true
+    }
+  }
+}
