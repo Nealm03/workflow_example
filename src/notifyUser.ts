@@ -10,8 +10,23 @@ type NotificationResult = {
   error?: NotificationError
 }
 
+
 export async function notifyUser(user: UserToNotify): Promise<NotificationResult> {
-  return await dummySendNewsletter(user);
+  const { error } = await dummySendNewsletter(user);
+
+  if (!error) {
+    return {};
+  }
+
+  switch (error) {
+    case NotificationError.AddressDoesNotExist: {
+      throw new NonRetryableError("Address does not exist");
+    } case NotificationError.ServerUnavailable: {
+      throw new RetryableError("Server unavailable");
+    }
+    default:
+      throw new Error("Unhandled error occurred");
+  }
 }
 
 async function dummySendNewsletter(user: UserToNotify) {
@@ -28,4 +43,16 @@ async function dummySendNewsletter(user: UserToNotify) {
   return {};
 }
 
+class NonRetryableError extends Error {
+  constructor(msg: string) {
+    super(msg);
+  }
+}
 
+class RetryableError extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.message = msg;
+    this.name = "RetryableError";
+  }
+}

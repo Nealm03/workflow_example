@@ -24,6 +24,12 @@ function publish_lambdas(){
     --handler findUsersToNotify.findUsersToNotify \
     --role $DUMMY_LAMBDA_ROLE_ARN \
     --zip-file fileb://dist/findUsersToNotify.zip
+
+  awslocal lambda create-function --function-name NotifyUser  \
+    --runtime nodejs14.x \
+    --handler notifyUser.notifyUser \
+    --role $DUMMY_LAMBDA_ROLE_ARN \
+    --zip-file fileb://dist/notifyUser.zip
 }
 
 
@@ -41,13 +47,13 @@ function invoke_workflow(){
     --name test \
     --input "{\"olderThan\": 20}"
   sleep 5 
-  awslocal stepfunctions list-executions --state-machine-arn $DUMMY_STATE_MACHINE_ARN
+  awslocal stepfunctions list-executions --state-machine-arn $DUMMY_STATE_MACHINE_ARN | jq .executions[-1].executionArn  | xargs awslocal stepfunctions get-execution-history --execution-arn  | jq .
 }
 
 function teardown(){
   rm -rf $WORKSPACE_DIR/dist
   awslocal lambda delete-function --function-name FindUsersToNotify
-
+  awslocal lambda delete-function --function-name NotifyUser
   awslocal stepfunctions delete-state-machine --state-machine-arn $DUMMY_STATE_MACHINE_ARN
 }
 

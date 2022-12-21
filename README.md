@@ -14,3 +14,4 @@ To run the solution locally, please ensure you have the dependencies installed l
 - Kubernetes distro (eg: [Docker Desktop Kubernetes](https://www.docker.com/products/kubernetes/))
 - [AWS Local](https://github.com/localstack/awscli-local)
 - [Tilt](https://tilt.dev/)
+- [jq](https://stedolan.github.io/jq/)

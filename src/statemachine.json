@@ -5,7 +5,36 @@
     "FindUsersToNotify": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:us-east-1:000000000000:function:FindUsersToNotify",
-      "End": true
+      "OutputPath": "$",
+      "Next": "Fan out user notifications"
+    },
+    "Fan out user notifications": {
+      "Comment": "Start notify user functions",
+      "Type": "Map",
+      "End": true,
+      "ItemsPath": "$",
+      "MaxConcurrency": 5,
+      "Iterator": {
+        "StartAt": "NotifyUser",
+        "States": {
+          "NotifyUser": {
+            "Type": "Task",
+            "Resource": "arn:aws:lambda:us-east-1:000000000000:function:NotifyUser",
+        
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "RetryableError"
+                ],
+                "IntervalSeconds": 1,
+                "MaxAttempts": 3,
+                "BackoffRate": 2
+              }
+            ],
+            "End": true
+          }
+        }
+      }
     }
   }
 }
