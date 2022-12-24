@@ -29,9 +29,7 @@ function invoke_workflow(){
     --name test \
     --input "{\"olderThan\": 20}" | jq -r .executionArn)
   sleep 5
-  echo $EXECUTION_ARN
-    awslocal stepfunctions get-execution-history --execution-arn  $EXECUTION_ARN --region $DEFAULT_REGION | jq 
-  
+  awslocal stepfunctions get-execution-history --execution-arn  $EXECUTION_ARN --region $DEFAULT_REGION | jq 
 }
 
 function teardown(){
