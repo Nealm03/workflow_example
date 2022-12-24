@@ -14,5 +14,5 @@ helm_resource(
 local_resource(
   'setup-local', 
   cmd='./tilt/setup_workflow_locally.sh', 
-  deps=['./tilt/setup_workflow_locally.sh', './src/statemachine.json', './src/notifyUser.ts', './src/findUsersToNotify.ts'],
+  deps=['./src'],
 )
