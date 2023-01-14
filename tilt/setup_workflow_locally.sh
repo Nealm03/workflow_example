@@ -4,7 +4,7 @@ WORKFLOW_NAME="notifications-workflow"
 DUMMY_STATE_MACHINE_ARN="arn:aws:states:$DEFAULT_REGION:000000000000:stateMachine:$WORKFLOW_NAME"
 
 BASE_PATH=$PWD
-SOURCE_CODE_WORKSPACE_DIR="./src"
+SOURCE_CODE_WORKSPACE_DIR="./activities"
 INFRA_DIR="./infra"
 
 function build_lambdas(){

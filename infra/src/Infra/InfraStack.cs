@@ -104,7 +104,7 @@ namespace Infra
           Role = generateLambdaRole("find-users-to-notify"),
           Handler = "findUsersToNotify.findUsersToNotify",
           FunctionName = "FindUsersToNotify",
-          Code = Code.FromAsset("../src/dist/findUsersToNotify.zip")
+          Code = Code.FromAsset("../activities/dist/findUsersToNotify.zip")
         }
       );
 
@@ -117,7 +117,7 @@ namespace Infra
           Role = generateLambdaRole("notify-user"),
           Handler = "notifyUser.notifyUser",
           FunctionName = "NotifyUser",
-          Code = Code.FromAsset("../src/dist/notifyUser.zip")
+          Code = Code.FromAsset("../activities/dist/notifyUser.zip")
         }
       );
       return (findUsersToNotifyFn, notifyUserFn);
